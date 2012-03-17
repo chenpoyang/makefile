@@ -7,7 +7,7 @@
 
 CC			= gcc
 CXX			= g++
-DEFINES		=
+DEFINES		= -DMY_DEBUG
 CFLAGS		= -O2 -Wall -g $(DEFINES)
 CXXFLAGS	= -O2 -Wall -g $(DEFINES)
 INCPATH		= -I.

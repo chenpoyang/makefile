@@ -8,7 +8,6 @@ void *run(void *thrd)
 
 	id = (int)thrd;
 	printf("subthread %d: running...\r\n", id);
-
 	pthread_exit(NULL);
 }
 
@@ -18,6 +17,12 @@ int main()
 	pthread_t thrd;
 	pthread_attr_t attr;
 	void *status;
+
+#ifdef MY_DEBUG
+	printf("MAIN: MY_DEBUG DEFINED!\r\n");
+#else
+	printf("MAIN: NO MY_DEBUG DEFINITION!\r\n");
+#endif
 
 	thrd_id = 10;
 	status = NULL;
@@ -46,7 +51,7 @@ int main()
 		exit(-1);
 	}
 	printf("Main: completed join with thread %d"
-			"having a status of %d\r\n", thrd_id, (int)status);
+			" having a status of %d\r\n", thrd_id, (int)status);
 
 	printf("Main: completed,Exiting.\r\n");
 	pthread_exit(NULL);
