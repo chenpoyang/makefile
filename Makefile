@@ -41,7 +41,7 @@ index: index.o
 index.o: index.c
 	$(CC) $(CFLAGS) $(INCPATH)	-c -o index.o index.c
 
-# pseudo-target
+# pseudo target
 .PHONY: clean
 
 # clean
