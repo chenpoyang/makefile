@@ -52,12 +52,14 @@ index: index.o
 index.o: index.c
 	$(CC) $(CFLAGS) $(INCPATH)	-c -o index.o index.c
 
-none:
-	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
-	@echo "	$(ALL_T) all"
 
 # pseudo target
 .PHONY: clean default none
+
+# make entrance with no options
+none:
+	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
+	@echo "	$(ALL_T) all"
 
 # clean
 clean:
