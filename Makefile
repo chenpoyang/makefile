@@ -41,6 +41,9 @@ index: index.o
 index.o: index.c
 	$(CC) $(CFLAGS) $(INCPATH)	-c -o index.o index.c
 
+# pseudo target
 .PHONY: clean
+
+# clean
 clean:
 	$(RM) $(ALL_OBJ) $(ALL_T)
