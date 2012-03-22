@@ -45,7 +45,7 @@ ALL_T		= $(ALL_C_T) $(ALL_CXX_T)
 # all object
 ALL_C_OBJ	= index.o
 
-ALL_CXX_OBJ	= 
+ALL_CXX_OBJ	=
 
 ALL_OBJ		= $(ALL_C_OBJ) $(ALL_CXX_OBJ)
 
@@ -54,17 +54,20 @@ default:	$(ENTRANCE)
 
 all:	$(ALL_T)
 
+## compile , but not link
+#$(ALL_C_OBJ): %.o : %.c
+#	$(CC) $(CFLAGS) $(INCPATH)  -c $< -o $@
+#$(ALL_CXX_OBJ): %.o : %.cpp
+#	$(CXX) $(CXXFLAGS) $(INCPATH)  -c $< -o $@
+
 # link object
 $(ALL_C_T): % : %.o
-	$(CC) -o $@ $(LIBS) $<
+	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
 $(ALL_CXX_T): % : %.o
-	$(CXX) -o $@ $(LIBS) $<
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
 
-# compile , but not link
-$(ALL_C_OBJ): %.o : %.c
-	$(CC) -c $(CFLAGS) $(INCPATH) $< -o $@
-$(ALL_CXX_OBJ): %.o : %.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) $< -o $@
+# dependency
+index.o: index.c
 
 none:
 	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
