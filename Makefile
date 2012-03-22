@@ -1,9 +1,9 @@
-####################################################################
+################################################################
 # For building: ALL_T
 # make version:	GNU Make 3.82
 # g++ version:	gcc version 4.5.1
 # gcc version:	g++ version 4.5.1
-####################################################################
+################################################################
 
 #### === CHANGE THE SETTINGS BELOW TO SUIT YOUR ENVIRONMENT === ####
 
@@ -11,9 +11,11 @@
 ENTRANCE	= none
 
 ########## Compiler, tools and options
+
 CC			= gcc
 CXX			= g++
-DEFINES		= -DMY_DEBUG
+# DEFINES		= -DNO_DEBUG
+DEFINES		=
 CFLAGS		= -O2 -Wall -g $(DEFINES)
 CXXFLAGS	= -O2 -Wall -g $(DEFINES)
 INCPATH		= -I.
@@ -34,33 +36,40 @@ MYLIBS		=
 # == END SETTINGS -- NO NEED TO CHANGE ANYTHING BELOW THIS LINE == #
 
 # all target
-ALL_T		= index
+ALL_C_T		= index
+
+ALL_CXX_T	=
+
+ALL_T		= $(ALL_C_T) $(ALL_CXX_T)
 
 # all object
-ALL_OBJ		= *.o
+ALL_C_OBJ	= index.o
+
+ALL_CXX_OBJ	= 
+
+ALL_OBJ		= $(ALL_C_OBJ) $(ALL_CXX_OBJ)
 
 # Targets start here
 default:	$(ENTRANCE)
 
 all:	$(ALL_T)
 
-# link
-index: index.o
-	$(CC) -o index index.o $(LIBS)
+# link object
+$(ALL_C_T): % : %.o
+	$(CC) -o $@ $(LIBS) $<
+$(ALL_CXX_T): % : %.o
+	$(CXX) -o $@ $(LIBS) $<
 
-# compile
-index.o: index.c
-	$(CC) $(CFLAGS) $(INCPATH)	-c -o index.o index.c
+# compile , but not link
+$(ALL_C_OBJ): %.o : %.c
+	$(CC) -c $(CFLAGS) $(INCPATH) $< -o $@
+$(ALL_CXX_OBJ): %.o : %.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) $< -o $@
 
-
-# pseudo target
-.PHONY: clean default none
-
-# make entrance with no options
 none:
 	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
 	@echo "	$(ALL_T) all"
 
-# clean
+.PHONY: clean default none all
 clean:
 	$(RM) $(ALL_OBJ) $(ALL_T)
