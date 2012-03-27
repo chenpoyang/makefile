@@ -21,6 +21,9 @@ CXXFLAGS	= -O2 -Wall -g $(DEFINES)
 INCPATH		= -I.
 LDFLAGS		= $(SYSLDFLAGS) $(MYLDFLAGS)
 LIBS		= -l$(SYSLIBS) $(MYLIBS)
+
+AR			= ar rcu
+RANLIB		= ranlib
 RM			= rm -f
 
 # system options
@@ -54,25 +57,21 @@ default:	$(ENTRANCE)
 
 all:	$(ALL_T)
 
-## compile , but not link
-#$(ALL_C_OBJ): %.o : %.c
-#	$(CC) $(CFLAGS) $(INCPATH)  -c $< -o $@
-#$(ALL_CXX_OBJ): %.o : %.cpp
-#	$(CXX) $(CXXFLAGS) $(INCPATH)  -c $< -o $@
-
 # link object
 $(ALL_C_T): % : %.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
 $(ALL_CXX_T): % : %.o
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
 
-# dependency
-index.o: index.c
-
 none:
 	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
 	@echo "	$(ALL_T) all"
 
+# pseudo targets
 .PHONY: clean default none all
+
 clean:
 	$(RM) $(ALL_OBJ) $(ALL_T)
+
+# do not delete
+index.o: index.c
