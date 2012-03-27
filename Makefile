@@ -55,20 +55,22 @@ ALL_OBJ		= $(ALL_C_OBJ) $(ALL_CXX_OBJ)
 # Targets start here
 default:	$(ENTRANCE)
 
-all:	$(ALL_T)
+all:	$(ALL_T) $(ALL_OBJ)
+
+index: index.o -lpthread
 
 # link object
-$(ALL_C_T): % : %.o
-	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
-$(ALL_CXX_T): % : %.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
+#$(ALL_C_T): % : %.o
+#	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
+#$(ALL_CXX_T): % : %.o
+#	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
+
+# pseudo targets
+.PHONY: clean default none all
 
 none:
 	@echo "Please do 'make OPTIONS' wehre OPTIONS is one of these:"
 	@echo "	$(ALL_T) all"
-
-# pseudo targets
-.PHONY: clean default none all
 
 clean:
 	$(RM) $(ALL_OBJ) $(ALL_T)
